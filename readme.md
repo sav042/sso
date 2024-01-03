@@ -17,3 +17,10 @@ proto/sso/sso.proto — путь к конкретному .proto файлу, к
 —go-grpc_out=./gen/go/ — указывает, куда записывать сгенерированный Go gRPC-код. Как и в предыдущем случае, выходные файлы будут помещены в директорию ./gen/go/.
 
 —go-grpc_opt=paths=source_relative — это аналогичная опция для генерации Go gRPC-кода, которая указывает, как создавать имена пакетов для gRPC.
+
+
+## App run
+
+```shell
+go run cmd/sso/main.go --config=./config/local.yaml
+```
