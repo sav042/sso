@@ -60,6 +60,123 @@ func TestRegisterLogin_HappyPath(t *testing.T) {
 
 }
 
+func TestRegisterLogin_DuplicatedRegistration(t *testing.T) {
+	ctx, st := suite.New(t)
+
+	email := gofakeit.Email()
+	pass := randomFakePassword()
+
+	respReg, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+		Email:    email,
+		Password: pass,
+	})
+	require.NoError(t, err)
+	assert.NotEmpty(t, respReg.GetUserId())
+
+	_, err = st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+		Email:    email,
+		Password: pass,
+	})
+	assert.Error(t, err)
+	assert.Empty(t, respReg.GetUserId())
+	assert.ErrorContains(t, err, "user already exists")
+}
+
+func TestRegister_FailCases(t *testing.T) {
+	ctx, st := suite.New(t)
+
+	tests := []struct {
+		name        string
+		email       string
+		password    string
+		expectedErr string
+	}{
+		{
+			name:        "Register with Empty Password",
+			email:       gofakeit.Email(),
+			password:    "",
+			expectedErr: "password is empty",
+		},
+		{
+			name:        "Register with Empty Email",
+			email:       "",
+			password:    randomFakePassword(),
+			expectedErr: "email is empty",
+		},
+		{
+			name:        "Register with Both Empty",
+			email:       "",
+			password:    "",
+			expectedErr: "email is empty",
+		},
+	}
+
+	for _, tt := range tests {
+		_, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+			Email:    tt.email,
+			Password: tt.password,
+		})
+		require.Error(t, err)
+		require.Contains(t, err.Error(), tt.expectedErr)
+	}
+
+}
+
+func TestLogin_FailCases(t *testing.T) {
+	ctx, st := suite.New(t)
+
+	email := gofakeit.Email()
+	pass := randomFakePassword()
+
+	respReg, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+		Email:    email,
+		Password: pass,
+	})
+	require.NoError(t, err)
+	assert.NotEmpty(t, respReg.GetUserId())
+
+	tests := []struct {
+		name        string
+		email       string
+		password    string
+		appID       string
+		expectedErr string
+	}{
+		{
+			name:        "Login with Wrong Email",
+			email:       gofakeit.Email(),
+			password:    pass,
+			appID:       appID,
+			expectedErr: "invalid credentials",
+		},
+		{
+			name:        "Login with Wrong Password",
+			email:       email,
+			password:    randomFakePassword(),
+			appID:       appID,
+			expectedErr: "invalid credentials",
+		},
+		{
+			name:        "Login with Wrong AppID",
+			email:       email,
+			password:    pass,
+			appID:       gofakeit.Name(),
+			expectedErr: "invalid credentials",
+		},
+	}
+
+	for _, tt := range tests {
+		_, err := st.AuthClient.Login(ctx, &ssov1.LoginRequest{
+			Email:    tt.email,
+			Password: tt.password,
+			AppId:    tt.appID,
+		})
+		require.Error(t, err)
+		require.Contains(t, err.Error(), tt.expectedErr)
+	}
+
+}
+
 func randomFakePassword() string {
 	return gofakeit.Password(true, true, true, true, false, passDefaultLen)
 }

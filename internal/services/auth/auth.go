@@ -81,7 +81,8 @@ func (a *Auth) Login(ctx context.Context, email, password, appID string) (string
 
 	app, err := a.appProvider.App(ctx, appID)
 	if err != nil {
-		return "", fmt.Errorf("%s: %w", op, err)
+		a.log.Info("invalid app id: %s", err.Error())
+		return "", fmt.Errorf("%s: %w", op, ErrInvalidAppID)
 	}
 	a.log.Info("user logged in successfully")
 
