@@ -1,4 +1,4 @@
-module sso
+module github.com/sav042/sso
 
 go 1.21.3
 
