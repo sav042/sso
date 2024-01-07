@@ -8,7 +8,6 @@ import (
 	"google.golang.org/grpc/status"
 	ssov1 "sso/gen/go/sso"
 	"sso/internal/services/auth"
-	"sso/internal/storage"
 )
 
 type Auth interface {
@@ -76,7 +75,7 @@ func (s *serverAPI) IsAdmin(ctx context.Context, req *ssov1.IsAdminRequest) (*ss
 
 	isAdmin, err := s.auth.IsAdmin(ctx, req.GetUserId())
 	if err != nil {
-		if errors.Is(err, storage.ErrUserNotFound) {
+		if errors.Is(err, auth.ErrUserNotFound) {
 			return nil, status.Error(codes.NotFound, "user not found")
 		}
 

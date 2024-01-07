@@ -73,7 +73,7 @@ func TestRegisterLogin_DuplicatedRegistration(t *testing.T) {
 	require.NoError(t, err)
 	assert.NotEmpty(t, respReg.GetUserId())
 
-	_, err = st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+	respReg, err = st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
 		Email:    email,
 		Password: pass,
 	})
