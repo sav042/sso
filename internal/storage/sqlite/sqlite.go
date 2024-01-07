@@ -61,7 +61,7 @@ func (s *Storage) User(ctx context.Context, email string) (*models.User, error) 
 	}
 
 	var result models.User
-	err = stmt.QueryRowContext(ctx, email).Scan(&result)
+	err = stmt.QueryRowContext(ctx, email).Scan(&result.ID, &result.Email, &result.PassHash)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, fmt.Errorf("%s: %w", op, storage.ErrUserNotFound)
@@ -103,7 +103,7 @@ func (s *Storage) App(ctx context.Context, appID string) (*models.App, error) {
 	}
 
 	var result models.App
-	err = stmt.QueryRowContext(ctx, appID).Scan(&result)
+	err = stmt.QueryRowContext(ctx, appID).Scan(&result.ID, &result.Name, &result.Secret)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, fmt.Errorf("%s: %w", op, storage.ErrAppNotFound)
