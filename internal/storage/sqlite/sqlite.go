@@ -8,8 +8,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/mattn/go-sqlite3"
 	_ "github.com/mattn/go-sqlite3"
-	"sso/internal/domain/models"
-	"sso/internal/storage"
+	"github.com/sav042/sso/internal/domain/models"
+	"github.com/sav042/sso/internal/storage"
 )
 
 type Storage struct {

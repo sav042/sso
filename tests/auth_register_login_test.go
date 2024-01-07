@@ -3,10 +3,10 @@ package tests
 import (
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/golang-jwt/jwt/v5"
+	ssov1 "github.com/sav042/sso/gen/go/sso"
+	"github.com/sav042/sso/tests/suite"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	ssov1 "sso/gen/go/sso"
-	"sso/tests/suite"
 	"testing"
 	"time"
 )

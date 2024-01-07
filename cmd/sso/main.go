@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/sav042/sso/internal/app"
+	"github.com/sav042/sso/internal/config"
 	"log/slog"
 	"os"
 	"os/signal"
-	"sso/internal/app"
-	"sso/internal/config"
 	"syscall"
 )
 

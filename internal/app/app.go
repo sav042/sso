@@ -1,10 +1,10 @@
 package app
 
 import (
+	grpcapp "github.com/sav042/sso/internal/app/grpc"
+	"github.com/sav042/sso/internal/services/auth"
+	"github.com/sav042/sso/internal/storage/sqlite"
 	"log/slog"
-	grpcapp "sso/internal/app/grpc"
-	"sso/internal/services/auth"
-	"sso/internal/storage/sqlite"
 	"time"
 )
 

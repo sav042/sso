@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/sav042/sso/internal/domain/models"
+	"github.com/sav042/sso/internal/lib/jwt"
+	"github.com/sav042/sso/internal/storage"
 	"golang.org/x/crypto/bcrypt"
 	"log/slog"
-	"sso/internal/domain/models"
-	"sso/internal/lib/jwt"
-	"sso/internal/storage"
 	"time"
 )
 
