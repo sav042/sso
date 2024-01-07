@@ -3,7 +3,9 @@ module sso
 go 1.21.3
 
 require (
+	github.com/golang-jwt/jwt/v5 v5.2.0
 	github.com/ilyakaznacheev/cleanenv v1.5.0
+	golang.org/x/crypto v0.14.0
 	google.golang.org/grpc v1.60.1
 	google.golang.org/protobuf v1.32.0
 )
